@@ -53,7 +53,7 @@ export default function AboutPage() {
                     <div className="about-photo-wrap">
                         <Image
                             className="about-photo"
-                            src="/regi_profile_2.webp"
+                            src="/regi_profile_3.webp"
                             alt="Regi Muhammar"
                             width={600}
                             height={800}

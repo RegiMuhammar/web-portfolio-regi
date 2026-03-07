@@ -7,7 +7,7 @@ export default function HeroSection() {
             {/* Full-bleed photo background */}
             <Image
                 className="hero-photo"
-                src="/regi_profile_2.webp"
+                src="/regi_profile_3.webp"
                 alt="Regi Muhammar"
                 fill
                 priority
