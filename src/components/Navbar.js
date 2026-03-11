@@ -9,9 +9,8 @@ const navItems = [
     { href: '/portfolio', label: 'Portfolio' },
     { href: '/services', label: 'Services' },
     { href: '/about', label: 'About' },
-    { href: '/testimonials', label: 'Clients' },
+
     { href: '/blog', label: 'Blog' },
-    { href: '/contact', label: 'Contact' },
 ];
 
 export default function Navbar() {

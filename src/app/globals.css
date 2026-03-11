@@ -149,7 +149,7 @@ a {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(105deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.55) 38%, rgba(193, 8, 1, 0.18) 62%, rgba(232, 80, 2, 0.10) 100%);
+    background: linear-gradient(-120deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.55) 38%, rgba(193, 8, 1, 0.18) 62%, rgba(232, 80, 2, 0.10) 100%);
 }
 
 .hero-glow2 {
@@ -167,7 +167,7 @@ a {
     top: 0;
     left: 0;
     right: 0;
-    height: 220px;
+    height: 20px;
     z-index: 1;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
 }
@@ -1016,77 +1016,6 @@ a {
     line-height: 1.7;
 }
 
-/* TESTIMONIALS */
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 60px;
-}
-
-.testi-card {
-    background: var(--dark2);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 32px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
-}
-
-.testi-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(232, 80, 2, 0.2);
-}
-
-.testi-quote {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 80px;
-    color: rgba(232, 80, 2, 0.15);
-    line-height: 0.8;
-    margin-bottom: 8px;
-}
-
-.testi-text {
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--light-gray);
-    margin-bottom: 24px;
-}
-
-.testi-author {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-.testi-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--orange), #C10801);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    flex-shrink: 0;
-}
-
-.testi-name {
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.testi-role {
-    font-size: 12px;
-    color: var(--gray);
-}
-
-.stars {
-    color: var(--orange);
-    font-size: 12px;
-    margin-bottom: 4px;
-}
 
 /* BLOG */
 .blog-featured {
@@ -1682,7 +1611,7 @@ nav {
     padding: 24px 48px;
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(232, 80, 2, 0.1);
-    background: rgba(0, 0, 0, 0.7);
+    /* background: rgba(0, 0, 0, 0.7); */
     transition: padding 0.3s;
 }
 
@@ -1740,7 +1669,7 @@ nav {
 }
 
 .nav-links a.active {
-    color: var(--orange);
+    color: var(--white);
 }
 
 .nav-cta {
@@ -1887,7 +1816,6 @@ nav {
     }
 
     .portfolio-grid,
-    .testimonials-grid,
     .blog-grid {
         grid-template-columns: 1fr;
     }
