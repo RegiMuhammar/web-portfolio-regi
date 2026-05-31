@@ -1,10 +1,10 @@
-import { Epilogue, Bebas_Neue, JetBrains_Mono } from "next/font/google";
+import { Raleway, Bebas_Neue, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import GlowOrbs from "@/components/GlowOrbs";
 
-const epilogue = Epilogue({
-  variable: "--font-epilogue",
+const raleway = Raleway({
+  variable: "--font-raleway",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "900"],
 });
@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${epilogue.variable} ${bebasNeue.variable} ${jetbrainsMono.variable}`}
+        className={`${raleway.variable} ${bebasNeue.variable} ${jetbrainsMono.variable}`}
       >
         <GlowOrbs />
         <Navbar />

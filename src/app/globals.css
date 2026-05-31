@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Epilogue:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
     --orange: #E85002;
@@ -25,7 +25,7 @@ html {
 }
 
 body {
-    font-family: 'Epilogue', sans-serif;
+    font-family: 'Raleway', sans-serif;
     background: var(--black);
     color: var(--white);
     overflow-x: hidden;
@@ -318,7 +318,7 @@ a {
     color: var(--white);
     border: none;
     padding: 16px 32px;
-    font-family: 'Epilogue', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -355,7 +355,7 @@ a {
     color: var(--white);
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 15px 32px;
-    font-family: 'Epilogue', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -588,7 +588,7 @@ a {
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: transparent;
     color: var(--light-gray);
-    font-family: 'Epilogue', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 1.5px;
@@ -1206,7 +1206,7 @@ a {
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: var(--white);
     padding: 14px 16px;
-    font-family: 'Epilogue', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 14px;
     transition: border-color 0.3s;
     outline: none;
@@ -1678,7 +1678,7 @@ nav {
     color: var(--white);
     border: none;
     padding: 10px 24px;
-    font-family: 'Epilogue', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 1px;
