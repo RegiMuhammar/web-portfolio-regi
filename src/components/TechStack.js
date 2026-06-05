@@ -1,3 +1,5 @@
+import { SectionHeader } from '@/components/design-system';
+
 const techs = [
     'Python', 'BigQuery', 'dbt', 'Airflow', 'PostgreSQL', 'TensorFlow',
     'LangChain', 'FastAPI', 'PySpark', 'Looker Studio', 'Power BI', 'Docker',
@@ -7,10 +9,12 @@ const techs = [
 export default function TechStack() {
     return (
         <section className="section">
-            <div className="section-label reveal">Tech Arsenal</div>
-            <div className="section-title reveal">
-                Tools &amp; <span className="outline">Technologies</span>
-            </div>
+            <SectionHeader
+                eyebrow="Tech Arsenal"
+                title="Tools &"
+                accent="Technologies"
+                description="The stack I use to ship reliable analytics, automation, and AI systems."
+            />
             <div className="tech-grid">
                 {techs.map((tech) => (
                     <div className="tech-item reveal" key={tech}>

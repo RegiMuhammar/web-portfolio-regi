@@ -1,119 +1,91 @@
 import Link from 'next/link';
+import { GradientPillButton } from '@/components/design-system';
 
 const cards = [
     {
-        num: '01',
         title: 'Data Analytics & Visualization',
-        desc: '50+ dashboard pages across E-Commerce, Telecom, Government, Real Estate. Real-time executive insights with Looker Studio & Power BI.',
+        desc: 'Executive dashboards and analytics systems that turn complex datasets into clear operating signals.',
         icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" />
-                <path d="M8 21h8M12 17v4" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
             </svg>
         ),
-        large: true,
-        orange: false,
     },
     {
-        num: '',
         title: 'AI & Machine Learning',
-        desc: 'RAG chatbots, LLM fine-tuning, anomaly detection, demand forecasting — production-grade ML systems with MLFlow.',
+        desc: 'RAG assistants, anomaly detection, forecasting, and model workflows built for production use.',
         icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                <polyline points="16 7 22 7 22 13" />
             </svg>
         ),
-        large: false,
-        orange: true,
     },
     {
-        num: '03',
         title: 'Data Engineering',
-        desc: 'End-to-end ETL pipelines, dbt + Airflow orchestration, PostgreSQL to BigQuery ingestion. Cloud cost optimization on GCP & AWS.',
+        desc: 'ETL pipelines, dbt models, Airflow orchestration, and cloud data platforms optimized for cost.',
         icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <ellipse cx="12" cy="5" rx="9" ry="3" />
-                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="13" r="8" />
+                <path d="M12 9v4l2 2" />
+                <path d="M5 3L2 6" />
+                <path d="M19 3l3 3" />
             </svg>
         ),
-        large: false,
-        orange: false,
     },
     {
-        num: '04',
-        title: 'Data Management & Governance',
-        desc: 'SDI framework implementation, data standardization, quality analysis. Delivered training to 80+ government agencies.',
+        title: 'Governance & Quality',
+        desc: 'Data standards, quality analysis, SDI frameworks, and adoption training for enterprise teams.',
         icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="12" r="6" />
+                <circle cx="12" cy="12" r="2" />
             </svg>
         ),
-        large: false,
-        orange: false,
     },
     {
-        num: '05',
-        title: 'API & Backend Development',
-        desc: 'FastAPI microservices, PostgreSQL architecture, Docker deployments. Full AI agent prototyping with n8n automation.',
+        title: 'API & Backend',
+        desc: 'FastAPI services, PostgreSQL architecture, Docker deployments, and automation prototypes.',
         icon: (
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M9 12l2 2 4-4" />
             </svg>
         ),
-        large: false,
-        orange: false,
+    },
+    {
+        title: 'Cloud & Infrastructure',
+        desc: 'Scalable architecture, CI/CD pipelines, and infrastructure as code to guarantee reliable performance.',
+        icon: (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+            </svg>
+        ),
     },
 ];
 
 export default function BentoGrid() {
     return (
         <section className="section">
-            <div className="section-label reveal">What I Do</div>
-            <div className="section-title reveal">
-                Expertise in <span className="outline">Data</span>
-                <br />
-                &amp; AI Intelligence
+            <div className="clean-grid-header reveal">
+                <h2 className="clean-grid-title">
+                    Build solution, <span>not just product</span>
+                </h2>
+                <GradientPillButton size="default" href="/contact" icon={false} className="clean-grid-cta">
+                    Get Started
+                </GradientPillButton>
             </div>
-            <div className="bento-grid" style={{ marginTop: '48px' }}>
-                {cards.map((card) => (
-                    <Link
-                        key={card.title}
-                        href="/services"
-                        className={`bento-card reveal ${card.large ? 'large' : ''} ${card.orange ? 'orange-card' : ''}`}
-                    >
-                        {card.num && <div className="bento-num">{card.num}</div>}
-                        <div className="bento-icon">{card.icon}</div>
-                        <div className="bento-title">{card.title}</div>
-                        <div className="bento-desc">{card.desc}</div>
-                        <div className="bento-arrow">→</div>
-                    </Link>
-                ))}
 
-                {/* CTA card */}
-                <Link
-                    href="/contact"
-                    className="bento-card reveal"
-                    style={{
-                        background: 'transparent',
-                        border: '1px dashed rgba(232,80,2,0.3)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        textAlign: 'center',
-                    }}
-                >
-                    <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: '32px', marginBottom: '8px' }}>
-                        Have a Project?
+            <div className="clean-grid">
+                {cards.map((card) => (
+                    <div key={card.title} className="clean-card reveal">
+                        <div className="clean-card-icon">{card.icon}</div>
+                        <div className="clean-card-title">{card.title}</div>
+                        <div className="clean-card-desc">{card.desc}</div>
                     </div>
-                    <div style={{ fontSize: '13px', color: 'var(--light-gray)', marginBottom: '24px' }}>
-                        Let&apos;s turn your data into intelligence
-                    </div>
-                    <span className="btn-primary" style={{ fontSize: '12px', padding: '12px 24px' }}>
-                        Get In Touch →
-                    </span>
-                </Link>
+                ))}
             </div>
         </section>
     );

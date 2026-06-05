@@ -1,25 +1,33 @@
-const skills = [
-    'AI & Machine Learning',
-    'Deep Learning',
-    'Data Engineering',
-    'LLM & RAG Systems',
-    'Dashboard Analytics',
-    'BigQuery & dbt',
-    'Data Management & Governance',
-    'NLP & Computer Vision',
-    'ETL Pipelines',
+const techs = [
+    'Python',
+    'BigQuery',
+    'dbt',
+    'Airflow',
+    'PostgreSQL',
+    'TensorFlow',
+    'LangChain',
+    'FastAPI',
+    'PySpark',
+    'Looker Studio',
+    'Power BI',
+    'Docker',
+    'ChromaDB',
+    'MLFlow',
+    'Scikit-learn',
+    'n8n',
+    'GCP',
+    'AWS',
 ];
 
 export default function Ticker() {
-    // Duplicate items so the ticker loops seamlessly
-    const items = [...skills, ...skills];
+    const items = [...techs, ...techs];
 
     return (
         <div className="ticker-section">
             <div className="ticker-track">
-                {items.map((skill, i) => (
+                {items.map((tech, i) => (
                     <span className="ticker-item" key={i}>
-                        <span>✦</span> {skill}
+                        <span>/</span> {tech}
                     </span>
                 ))}
             </div>

@@ -5,11 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navItems = [
-    { href: '/', label: 'Home' },
     { href: '/portfolio', label: 'Portfolio' },
     { href: '/services', label: 'Services' },
     { href: '/about', label: 'About' },
-
     { href: '/blog', label: 'Blog' },
 ];
 
@@ -18,9 +16,9 @@ export default function Navbar() {
     const pathname = usePathname();
 
     return (
-        <nav id="navbar">
+        <nav id="navbar" className="site-nav">
             <Link href="/" className="nav-logo">
-                <img src="/logo_regi.webp" alt="RegiMR" className="nav-logo-img" />
+                <span className="nav-logo-text">Regi Muhammar</span>
             </Link>
             <ul className={`nav-links ${mobileOpen ? 'mobile-open' : ''}`}>
                 {navItems.map((item) => (
@@ -36,17 +34,20 @@ export default function Navbar() {
                     </li>
                 ))}
             </ul>
-            <Link href="/contact" className="nav-cta">
-                Get in touch →
+            <Link href="/contact" className="nav-cta gradient-button">
+                Discuss a Project
             </Link>
-            <div
+            <button
+                type="button"
                 className={`hamburger ${mobileOpen ? 'active' : ''}`}
                 onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label="Toggle navigation"
+                aria-expanded={mobileOpen}
             >
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </nav>
     );
 }
