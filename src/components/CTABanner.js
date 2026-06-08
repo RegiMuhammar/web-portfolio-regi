@@ -4,7 +4,6 @@ export default function CTABanner() {
     return (
         <section className="cta-banner">
             <div className="cta-copy">
-                <div className="section-label">Open to Work</div>
                 <h2 className="cta-title">
                     Ready to transform
                     <span className="gradient-text-white"> your data strategy?</span>
