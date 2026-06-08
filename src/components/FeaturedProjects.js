@@ -49,24 +49,41 @@ export default function FeaturedProjects() {
                             <div className="featured-card" key={project.id}>
                                 {/* Left: Info (40%) */}
                                 <div className="featured-card-info">
-                                    <div className="featured-card-category">
-                                        {project.category?.replace('-', ' ')}
-                                    </div>
                                     <h3 className="featured-card-title">{project.title}</h3>
 
-                                    {/* Tech Stack */}
-                                    {project.tech_stack && project.tech_stack.length > 0 && (
-                                        <div className="featured-card-meta">
-                                            <span className="featured-card-meta-label">Tech Stack</span>
-                                            <div className="featured-card-tags">
-                                                {project.tech_stack.map((tech) => (
-                                                    <span className="featured-card-tag" key={tech}>
-                                                        {tech}
-                                                    </span>
-                                                ))}
+                                    {/* Metadata Rows */}
+                                    <div className="featured-card-rows">
+
+
+
+                                        {/* Categories */}
+                                        {project.categories && project.categories.length > 0 && (
+                                            <div className="featured-card-row">
+                                                <span className="featured-card-row-label">Services</span>
+                                                <div className="featured-card-tags">
+                                                    {project.categories.map((cat) => (
+                                                        <span className="featured-card-tag" key={cat}>
+                                                            {cat}
+                                                        </span>
+                                                    ))}
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
+
+                                        {/* Tech Stack */}
+                                        {project.tech_stack && project.tech_stack.length > 0 && (
+                                            <div className="featured-card-row">
+                                                <span className="featured-card-row-label">Tech Stack</span>
+                                                <div className="featured-card-tags">
+                                                    {project.tech_stack.map((tech) => (
+                                                        <span className="featured-card-tag" key={tech}>
+                                                            {tech}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
 
                                     {/* Read Case Study Button */}
                                     <Link

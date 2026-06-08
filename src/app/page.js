@@ -15,7 +15,6 @@ export default function Home() {
       <Ticker />
       <FeaturedProjects />
       <BentoGrid />
-
       <TechStack />
       <CTABanner />
       {/* <div className="divider"></div> */}

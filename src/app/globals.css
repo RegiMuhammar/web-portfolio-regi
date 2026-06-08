@@ -777,7 +777,7 @@ a {
 
 .featured-card:hover {
     border-color: rgba(255, 107, 26, 0.18);
-    transform: translateY(-4px);
+    transform: translateY(-2px);
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(255, 107, 26, 0.06);
 }
 
@@ -795,36 +795,50 @@ a {
     z-index: 2;
 }
 
-.featured-card-category {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 16px;
-}
-
 .featured-card-title {
     font-family: 'Raleway', sans-serif;
     font-size: clamp(18px, 2vw, 24px);
     font-weight: 700;
     color: var(--white);
     line-height: 1.3;
-    margin: 0 0 24px;
+    margin: 0 0 28px;
 }
 
-.featured-card-meta {
-    margin-bottom: 28px;
+/* Horizontal Metadata Rows */
+.featured-card-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
-.featured-card-meta-label {
-    display: block;
-    font-size: 10px;
+.featured-card-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.featured-card-row:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.featured-card-row-label {
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
     color: var(--gray);
-    margin-bottom: 10px;
+    min-width: 90px;
+    flex-shrink: 0;
+    font-style: italic;
+}
+
+.featured-card-row-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.3px;
 }
 
 .featured-card-tags {
@@ -836,36 +850,37 @@ a {
 .featured-card-tag {
     font-size: 11px;
     color: var(--light-gray);
-    font-family: 'JetBrains Mono', monospace;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 4px 10px;
-    border-radius: 4px;
+    font-family: 'Raleway', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
     transition: border-color 0.3s ease, color 0.3s ease;
 }
 
 .featured-card:hover .featured-card-tag {
-    border-color: rgba(255, 107, 26, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Read Case Study Button — full width, outline style */
 .featured-card-btn {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 0;
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
     background: transparent;
     color: var(--white);
     font-family: 'Raleway', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.5px;
     cursor: pointer;
     text-decoration: none;
-    transition: color 0.3s ease;
-    margin-top: auto;
-    width: fit-content;
-    padding-top: 20px;
+    transition: all 0.3s ease;
+    margin-top: 24px;
 }
 
 .featured-card-btn svg {
@@ -873,7 +888,8 @@ a {
 }
 
 .featured-card-btn:hover {
-    color: var(--orange);
+    border-color: rgba(255, 255, 255, 0.24);
+    color: var(--white);
 }
 
 .featured-card-btn:hover svg {
@@ -897,7 +913,6 @@ a {
 }
 
 .featured-card:hover .featured-card-thumb img {
-    transform: scale(1.04);
     filter: grayscale(0%) brightness(1);
 }
 
