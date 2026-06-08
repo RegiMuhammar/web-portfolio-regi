@@ -26,7 +26,7 @@ export const metadata = {
   description:
     "Data Analyst & AI Engineer turning complex datasets into strategic intelligence. From AI pipelines to executive dashboards.",
   icons: {
-    icon: "/icon.svg",
+    icon: "/site-icon-regi.webp",
   },
 };
 
