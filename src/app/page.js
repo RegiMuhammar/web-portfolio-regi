@@ -1,4 +1,5 @@
 import HeroSection from '@/components/HeroSection';
+import FeaturedProjects from '@/components/FeaturedProjects';
 import RolesGrid from '@/components/RolesGrid';
 import Ticker from '@/components/Ticker';
 import BentoGrid from '@/components/BentoGrid';
@@ -12,10 +13,12 @@ export default function Home() {
       <HeroSection />
       <RolesGrid />
       <Ticker />
+      <FeaturedProjects />
       <BentoGrid />
-      <div className="divider"></div>
+
       <TechStack />
       <CTABanner />
+      {/* <div className="divider"></div> */}
       <Footer />
     </div>
   );
