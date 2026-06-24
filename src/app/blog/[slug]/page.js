@@ -1,183 +1,142 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+// Blog Detail Page — Server Component with Portable Text & Static Generation
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { PortableText } from '@portabletext/react';
+import { getPostBySlug, getAllPostSlugs, getRelatedPosts, urlFor } from '@/lib/sanity';
 import Footer from '@/components/Footer';
 
-function renderMarkdown(text) {
-    if (!text) return '';
+// Portable Text component overrides for blog body
+const ptComponents = {
+    types: {
+        image: ({ value }) => (
+            <figure style={{ margin: '32px 0' }}>
+                <img
+                    src={urlFor(value).width(900).url()}
+                    alt={value.alt || ''}
+                    style={{ width: '100%', borderRadius: '8px' }}
+                />
+                {value.caption && (
+                    <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
+                        {value.caption}
+                    </figcaption>
+                )}
+            </figure>
+        ),
+        codeBlock: ({ value }) => (
+            <div style={{ margin: '24px 0' }}>
+                {value.filename && (
+                    <div style={{
+                        background: 'rgba(255,255,255,0.05)',
+                        padding: '6px 16px',
+                        fontSize: '12px',
+                        color: 'var(--gray)',
+                        borderRadius: '6px 6px 0 0',
+                        borderBottom: '1px solid rgba(255,255,255,0.08)',
+                        fontFamily: 'monospace',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                    }}>
+                        <span>{value.language?.toUpperCase() || 'CODE'}</span>
+                        {value.filename && <span style={{ opacity: 0.6 }}>— {value.filename}</span>}
+                    </div>
+                )}
+                <pre className="code-block">
+                    <code>{value.code}</code>
+                </pre>
+            </div>
+        ),
+        callout: ({ value }) => {
+            const icons = { tip: '💡', warning: '⚠️', info: 'ℹ️', insight: '🔑' };
+            const colors = {
+                tip: 'rgba(52,211,153,0.08)',
+                warning: 'rgba(251,191,36,0.08)',
+                info: 'rgba(99,179,237,0.08)',
+                insight: 'rgba(232,80,2,0.08)',
+            };
+            return (
+                <div style={{
+                    margin: '24px 0',
+                    padding: '20px 24px',
+                    background: colors[value.type] || colors.info,
+                    borderRadius: '6px',
+                    borderLeft: '3px solid currentColor',
+                }}>
+                    <div style={{ marginBottom: '8px', fontWeight: 700 }}>
+                        {icons[value.type] || 'ℹ️'} {value.type?.charAt(0).toUpperCase() + value.type?.slice(1)}
+                    </div>
+                    <p style={{ margin: 0 }}>{value.content}</p>
+                </div>
+            );
+        },
+    },
+    marks: {
+        link: ({ children, value }) => (
+            <a
+                href={value.href}
+                target={value.blank ? '_blank' : '_self'}
+                rel="noopener noreferrer"
+                style={{ color: 'var(--orange)', textDecoration: 'underline' }}
+            >
+                {children}
+            </a>
+        ),
+        code: ({ children }) => (
+            <code className="inline-code">{children}</code>
+        ),
+    },
+    block: {
+        h2: ({ children }) => <h2>{children}</h2>,
+        h3: ({ children }) => <h3>{children}</h3>,
+        h4: ({ children }) => <h4>{children}</h4>,
+        blockquote: ({ children }) => (
+            <blockquote style={{
+                borderLeft: '3px solid var(--orange)',
+                paddingLeft: '20px',
+                margin: '24px 0',
+                color: 'var(--light-gray)',
+                fontStyle: 'italic',
+            }}>
+                {children}
+            </blockquote>
+        ),
+    },
+};
 
-    let html = text
-        // Code blocks (``` ... ```)
-        .replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
-            return `<pre class="code-block"><code>${code
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .trim()}</code></pre>`;
-        })
-        // Inline code
-        .replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>')
-        // Headers
-        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-        .replace(/^# (.+)$/gm, '<h2>$1</h2>')
-        // Bold
-        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-        // Italic
-        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-        // Horizontal rule
-        .replace(/^---$/gm, '<hr />')
-        // Tables
-        .replace(/(?:^(\|.+\|)\n(\|[-| :]+\|)\n((?:\|.+\|\n?)+))/gm, (_, header, separator, body) => {
-            const headers = header.split('|').filter(c => c.trim()).map(c => `<th>${c.trim()}</th>`).join('');
-            const rows = body.trim().split('\n').map(row => {
-                const cells = row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`).join('');
-                return `<tr>${cells}</tr>`;
-            }).join('');
-            return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
-        });
-
-    // Process lists and paragraphs
-    const lines = html.split('\n');
-    let result = [];
-    let inList = false;
-    let listType = '';
-    let i = 0;
-
-    while (i < lines.length) {
-        const line = lines[i];
-
-        // Skip lines that are part of pre-rendered HTML
-        if (line.startsWith('<pre') || line.startsWith('<table') || line.startsWith('<h2') || line.startsWith('<h3') || line.startsWith('<hr')) {
-            if (inList) {
-                result.push(listType === 'ul' ? '</ul>' : '</ol>');
-                inList = false;
-            }
-            result.push(line);
-            i++;
-            continue;
-        }
-
-        // Unordered list
-        if (/^- (.+)$/.test(line)) {
-            if (!inList || listType !== 'ul') {
-                if (inList) result.push(listType === 'ul' ? '</ul>' : '</ol>');
-                result.push('<ul>');
-                inList = true;
-                listType = 'ul';
-            }
-            result.push(`<li>${line.replace(/^- /, '')}</li>`);
-            i++;
-            continue;
-        }
-
-        // Ordered list
-        if (/^\d+\. (.+)$/.test(line)) {
-            if (!inList || listType !== 'ol') {
-                if (inList) result.push(listType === 'ul' ? '</ul>' : '</ol>');
-                result.push('<ol>');
-                inList = true;
-                listType = 'ol';
-            }
-            result.push(`<li>${line.replace(/^\d+\. /, '')}</li>`);
-            i++;
-            continue;
-        }
-
-        // Close list if we hit a non-list line
-        if (inList) {
-            result.push(listType === 'ul' ? '</ul>' : '</ol>');
-            inList = false;
-        }
-
-        // Empty line
-        if (line.trim() === '') {
-            i++;
-            continue;
-        }
-
-        // Regular paragraph
-        result.push(`<p>${line}</p>`);
-        i++;
-    }
-
-    if (inList) {
-        result.push(listType === 'ul' ? '</ul>' : '</ol>');
-    }
-
-    return result.join('\n');
+// Generate static pages at build time for all posts
+export async function generateStaticParams() {
+    const slugs = await getAllPostSlugs();
+    return slugs.map((s) => ({ slug: s.slug }));
 }
 
-export default function BlogDetailPage() {
-    const { slug } = useParams();
-    const [post, setPost] = useState(null);
-    const [related, setRelated] = useState([]);
-    const [loading, setLoading] = useState(true);
+// Generate dynamic metadata per post
+export async function generateMetadata({ params }) {
+    const post = await getPostBySlug(params.slug);
+    if (!post) return { title: 'Post Not Found' };
+    return {
+        title: post.seoTitle || `${post.title} — Regi Muhammar`,
+        description: post.seoDescription || post.excerpt,
+        openGraph: {
+            images: post.coverImage ? [urlFor(post.coverImage).width(1200).height(630).url()] : [],
+        },
+    };
+}
 
-    useEffect(() => {
-        async function loadPost() {
-            const { data, error } = await supabase
-                .from('blog_posts')
-                .select('*')
-                .eq('slug', slug)
-                .single();
+const formatDate = (dateStr) =>
+    new Date(dateStr).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+    });
 
-            if (!error && data) {
-                setPost(data);
+export default async function BlogDetailPage({ params }) {
+    const { slug } = params;
+    const post = await getPostBySlug(slug);
 
-                // Fetch related posts by same category
-                const { data: relatedData } = await supabase
-                    .from('blog_posts')
-                    .select('*')
-                    .eq('category', data.category)
-                    .eq('published', true)
-                    .neq('slug', slug)
-                    .order('created_at', { ascending: false })
-                    .limit(3);
+    if (!post) notFound();
 
-                if (relatedData) setRelated(relatedData);
-            }
-            setLoading(false);
-        }
-        if (slug) loadPost();
-    }, [slug]);
-
-    const formatDate = (dateStr) =>
-        new Date(dateStr).toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-        });
-
-    if (loading) {
-        return (
-            <div style={{ paddingTop: '80px' }}>
-                <div className="loading-wrap">
-                    <div className="loading-spinner"></div>
-                </div>
-            </div>
-        );
-    }
-
-    if (!post) {
-        return (
-            <div style={{ paddingTop: '80px' }}>
-                <div className="detail-content">
-                    <Link href="/blog" className="detail-back">
-                        ← Back to Blog
-                    </Link>
-                    <div className="detail-title">Post Not Found</div>
-                    <p style={{ color: 'var(--light-gray)' }}>
-                        The blog post you&apos;re looking for doesn&apos;t exist.
-                    </p>
-                </div>
-            </div>
-        );
-    }
+    const related = await getRelatedPosts(post.category, slug);
 
     return (
         <div style={{ paddingTop: '80px' }}>
@@ -196,32 +155,35 @@ export default function BlogDetailPage() {
                 {/* Meta */}
                 <div className="detail-meta">
                     <span className="detail-meta-item">
-                        <Calendar size={14} /> {formatDate(post.created_at)}
+                        <Calendar size={14} /> {post.publishedAt ? formatDate(post.publishedAt) : '—'}
                     </span>
                     <span className="detail-meta-item">
-                        <Clock size={14} /> {post.reading_time} min read
+                        <Clock size={14} /> {post.readingTime} min read
                     </span>
+                    {post.author && (
+                        <span className="detail-meta-item">
+                            ✍️ {post.author.name}
+                        </span>
+                    )}
                 </div>
 
                 {/* Banner Image */}
                 <div className="detail-banner">
                     <img
                         src={
-                            post.cover_image_url ||
-                            'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200'
+                            post.coverImage
+                                ? urlFor(post.coverImage).width(1200).url()
+                                : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200'
                         }
                         alt={post.title}
                     />
                 </div>
 
-                {/* Body */}
-                {post.content ? (
-                    <div
-                        className="detail-body"
-                        dangerouslySetInnerHTML={{
-                            __html: renderMarkdown(post.content),
-                        }}
-                    />
+                {/* Portable Text Body */}
+                {post.body && post.body.length > 0 ? (
+                    <div className="detail-body">
+                        <PortableText value={post.body} components={ptComponents} />
+                    </div>
                 ) : (
                     <div className="detail-body">
                         <p>{post.excerpt}</p>
@@ -235,9 +197,7 @@ export default function BlogDetailPage() {
                 {post.tags && post.tags.length > 0 && (
                     <div className="detail-tags" style={{ marginTop: '40px', paddingTop: '24px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                         {post.tags.map((tag) => (
-                            <span className="detail-tag" key={tag}>
-                                {tag}
-                            </span>
+                            <span className="detail-tag" key={tag}>{tag}</span>
                         ))}
                     </div>
                 )}
@@ -254,16 +214,13 @@ export default function BlogDetailPage() {
                     </div>
                     <div className="related-grid">
                         {related.map((item) => (
-                            <Link
-                                href={`/blog/${item.slug}`}
-                                className="blog-card small"
-                                key={item.id}
-                            >
+                            <Link href={`/blog/${item.slug}`} className="blog-card small" key={item._id}>
                                 <div className="blog-img" style={{ height: '160px' }}>
                                     <img
                                         src={
-                                            item.cover_image_url ||
-                                            'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800'
+                                            item.coverImage
+                                                ? urlFor(item.coverImage).width(600).url()
+                                                : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800'
                                         }
                                         alt={item.title}
                                         loading="lazy"
@@ -274,11 +231,9 @@ export default function BlogDetailPage() {
                                     <div className="blog-title">{item.title}</div>
                                     <div className="blog-meta">
                                         <span className="blog-date">
-                                            {formatDate(item.created_at)}
+                                            {item.publishedAt ? formatDate(item.publishedAt) : '—'}
                                         </span>
-                                        <span className="blog-read">
-                                            {item.reading_time} min →
-                                        </span>
+                                        <span className="blog-read">{item.readingTime} min →</span>
                                     </div>
                                 </div>
                             </Link>

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 
@@ -15,21 +14,30 @@ export default function ContactPage() {
         setSuccess(null);
 
         const form = e.target;
-        const { error } = await supabase.from('contact_messages').insert({
+        const payload = {
             name: form.name.value,
             email: form.email.value,
             subject: form.subject.value,
             message: form.message.value,
-        });
+        };
 
-        setSending(false);
-
-        if (!error) {
-            setSuccess(true);
-            form.reset();
-            setTimeout(() => setSuccess(null), 5000);
-        } else {
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            if (res.ok) {
+                setSuccess(true);
+                form.reset();
+                setTimeout(() => setSuccess(null), 5000);
+            } else {
+                setSuccess(false);
+            }
+        } catch {
             setSuccess(false);
+        } finally {
+            setSending(false);
         }
     }
 

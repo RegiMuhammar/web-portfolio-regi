@@ -1,28 +1,9 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+// FeaturedProjects — Server Component (no more client-side Supabase fetch)
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
+import { getFeaturedProjects, urlFor } from '@/lib/sanity';
 
-export default function FeaturedProjects() {
-    const [projects, setProjects] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function loadFeatured() {
-            const { data, error } = await supabase
-                .from('portfolio_projects')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .limit(3);
-
-            if (!error && data) {
-                setProjects(data);
-            }
-            setLoading(false);
-        }
-        loadFeatured();
-    }, []);
+export default async function FeaturedProjects() {
+    const projects = await getFeaturedProjects();
 
     return (
         <section className="featured-section">
@@ -39,23 +20,20 @@ export default function FeaturedProjects() {
                 </div>
 
                 {/* Projects List */}
-                {loading ? (
+                {projects.length === 0 ? (
                     <div className="loading-wrap">
-                        <div className="loading-spinner"></div>
+                        <p style={{ color: 'var(--gray)' }}>No featured projects yet.</p>
                     </div>
                 ) : (
                     <div className="featured-list">
-                        {projects.map((project, index) => (
-                            <div className="featured-card" key={project.id}>
+                        {projects.map((project) => (
+                            <div className="featured-card" key={project._id}>
                                 {/* Left: Info (40%) */}
                                 <div className="featured-card-info">
                                     <h3 className="featured-card-title">{project.title}</h3>
 
                                     {/* Metadata Rows */}
                                     <div className="featured-card-rows">
-
-
-
                                         {/* Categories */}
                                         {project.categories && project.categories.length > 0 && (
                                             <div className="featured-card-row">
@@ -71,11 +49,11 @@ export default function FeaturedProjects() {
                                         )}
 
                                         {/* Tech Stack */}
-                                        {project.tech_stack && project.tech_stack.length > 0 && (
+                                        {project.techStack && project.techStack.length > 0 && (
                                             <div className="featured-card-row">
                                                 <span className="featured-card-row-label">Tech Stack</span>
                                                 <div className="featured-card-tags">
-                                                    {project.tech_stack.map((tech) => (
+                                                    {project.techStack.map((tech) => (
                                                         <span className="featured-card-tag" key={tech}>
                                                             {tech}
                                                         </span>
@@ -101,9 +79,9 @@ export default function FeaturedProjects() {
                                 <div className="featured-card-thumb">
                                     <img
                                         src={
-                                            project.thumbnail_url ||
-                                            project.image_url ||
-                                            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
+                                            project.thumbnail
+                                                ? urlFor(project.thumbnail).width(900).url()
+                                                : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }
                                         alt={project.title}
                                         loading="lazy"
