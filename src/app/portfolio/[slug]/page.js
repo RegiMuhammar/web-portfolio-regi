@@ -54,7 +54,8 @@ export async function generateStaticParams() {
 
 // Generate dynamic metadata per page
 export async function generateMetadata({ params }) {
-    const project = await getProjectBySlug(params.slug);
+    const { slug } = await params;
+    const project = await getProjectBySlug(slug);
     if (!project) return { title: 'Project Not Found' };
     return {
         title: `${project.title} — Regi Muhammar`,
@@ -63,7 +64,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function PortfolioDetailPage({ params }) {
-    const { slug } = params;
+    const { slug } = await params;
     const project = await getProjectBySlug(slug);
 
     if (!project) notFound();

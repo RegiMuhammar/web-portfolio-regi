@@ -112,7 +112,8 @@ export async function generateStaticParams() {
 
 // Generate dynamic metadata per post
 export async function generateMetadata({ params }) {
-    const post = await getPostBySlug(params.slug);
+    const { slug } = await params;
+    const post = await getPostBySlug(slug);
     if (!post) return { title: 'Post Not Found' };
     return {
         title: post.seoTitle || `${post.title} — Regi Muhammar`,
@@ -131,7 +132,7 @@ const formatDate = (dateStr) =>
     });
 
 export default async function BlogDetailPage({ params }) {
-    const { slug } = params;
+    const { slug } = await params;
     const post = await getPostBySlug(slug);
 
     if (!post) notFound();

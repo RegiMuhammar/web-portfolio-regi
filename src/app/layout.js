@@ -1,7 +1,6 @@
 import { Raleway, Bebas_Neue, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import GlowOrbs from "@/components/GlowOrbs";
+import SiteChrome from "@/components/SiteChrome";
 
 const raleway = Raleway({
   variable: "--font-raleway",
@@ -36,8 +35,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${raleway.variable} ${bebasNeue.variable} ${jetbrainsMono.variable}`}
       >
-        <GlowOrbs />
-        <Navbar />
+        <SiteChrome />
         {children}
       </body>
     </html>
