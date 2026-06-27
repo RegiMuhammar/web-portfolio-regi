@@ -42,7 +42,7 @@ export default function ContactPage() {
     }
 
     return (
-        <div style={{ paddingTop: '80px' }}>
+        <div style={{ paddingTop: '64px' }}>
             <section className="section" style={{
                 display: 'flex',
                 flexDirection: 'column',

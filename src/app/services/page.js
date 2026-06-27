@@ -65,7 +65,7 @@ const processSteps = [
 
 export default function ServicesPage() {
     return (
-        <div style={{ paddingTop: '80px' }}>
+        <div style={{ paddingTop: '64px' }}>
             <section className="section">
                 <div className="section-label">Capabilities</div>
                 <div className="section-title">

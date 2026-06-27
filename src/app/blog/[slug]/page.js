@@ -143,7 +143,7 @@ export default async function BlogDetailPage({ params }) {
     const related = await getRelatedPosts(post.category, slug);
 
     return (
-        <div style={{ paddingTop: '80px' }}>
+        <div style={{ paddingTop: '64px' }}>
             {/* Content */}
             <div className="detail-content">
                 <Link href="/blog" className="detail-back">

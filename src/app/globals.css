@@ -2112,7 +2112,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px 48px;
+    padding: 16px 48px;
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(232, 80, 2, 0.1);
     /* background: rgba(0, 0, 0, 0.7); */
@@ -2228,7 +2228,7 @@ footer {
 /* RESPONSIVE */
 @media (max-width: 900px) {
     .site-nav {
-        padding: 16px 24px;
+        padding: 12px 24px;
     }
 
     .nav-links {

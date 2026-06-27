@@ -64,7 +64,7 @@ export default async function AboutPage() {
     const photoUrl = (about?.photo && about.photo.asset) ? urlFor(about.photo).width(600).height(800).url() : null;
 
     return (
-        <div style={{ paddingTop: '80px' }}>
+        <div style={{ paddingTop: '64px' }}>
             <section className="section">
                 <div className="about-grid">
                     <div className="about-photo-wrap">

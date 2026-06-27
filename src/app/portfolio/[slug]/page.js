@@ -75,7 +75,7 @@ export default async function PortfolioDetailPage({ params }) {
     const related = await getRelatedProjects(project.category, slug);
 
     return (
-        <div style={{ paddingTop: '80px' }}>
+        <div style={{ paddingTop: '64px' }}>
             {/* Content */}
             <div className="detail-content">
                 <Link href="/portfolio" className="detail-back">

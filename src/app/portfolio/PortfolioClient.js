@@ -27,7 +27,7 @@ export default function PortfolioClient({ projects }) {
             : projects.filter((p) => p.category === activeFilter);
 
     return (
-        <div style={{ paddingTop: '80px' }}>
+        <div style={{ paddingTop: '64px' }}>
             <section className="section">
                 <div className="section-label">Selected Work</div>
                 <div className="section-title">
