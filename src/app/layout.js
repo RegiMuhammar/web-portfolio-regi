@@ -1,6 +1,7 @@
 import { Raleway, Bebas_Neue, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteChrome from "@/components/SiteChrome";
+import ScrollAnimations from "@/components/ScrollAnimations";
 
 const raleway = Raleway({
   variable: "--font-raleway",
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${raleway.variable} ${bebasNeue.variable} ${jetbrainsMono.variable}`}
       >
+        <ScrollAnimations />
         <SiteChrome />
         {children}
       </body>

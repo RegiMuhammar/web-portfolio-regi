@@ -73,7 +73,7 @@ export default function PortfolioClient({ projects }) {
                                 <div className="port-img">
                                     <img
                                         src={
-                                            project.thumbnail
+                                            (project.thumbnail && project.thumbnail.asset)
                                                 ? urlFor(project.thumbnail).width(800).url()
                                                 : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }

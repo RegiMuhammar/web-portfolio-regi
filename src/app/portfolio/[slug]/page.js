@@ -9,20 +9,23 @@ import Footer from '@/components/Footer';
 // Portable Text component overrides for project body
 const ptComponents = {
     types: {
-        image: ({ value }) => (
-            <figure style={{ margin: '32px 0' }}>
-                <img
-                    src={urlFor(value).width(900).url()}
-                    alt={value.alt || ''}
-                    style={{ width: '100%', borderRadius: '8px' }}
-                />
-                {value.caption && (
-                    <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
-                        {value.caption}
-                    </figcaption>
-                )}
-            </figure>
-        ),
+        image: ({ value }) => {
+            if (!value || !value.asset) return null;
+            return (
+                <figure style={{ margin: '32px 0' }}>
+                    <img
+                        src={urlFor(value).width(900).url()}
+                        alt={value.alt || ''}
+                        style={{ width: '100%', borderRadius: '8px' }}
+                    />
+                    {value.caption && (
+                        <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
+                            {value.caption}
+                        </figcaption>
+                    )}
+                </figure>
+            );
+        },
         codeBlock: ({ value }) => (
             <div style={{ margin: '24px 0' }}>
                 {value.filename && (
@@ -116,9 +119,9 @@ export default async function PortfolioDetailPage({ params }) {
                 <div className="detail-banner">
                     <img
                         src={
-                            project.bannerImage
+                            (project.bannerImage && project.bannerImage.asset)
                                 ? urlFor(project.bannerImage).width(1200).url()
-                                : project.thumbnail
+                                : (project.thumbnail && project.thumbnail.asset)
                                     ? urlFor(project.thumbnail).width(1200).url()
                                     : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200'
                         }
@@ -246,7 +249,7 @@ export default async function PortfolioDetailPage({ params }) {
                                 <div className="port-img">
                                     <img
                                         src={
-                                            item.thumbnail
+                                            (item.thumbnail && item.thumbnail.asset)
                                                 ? urlFor(item.thumbnail).width(800).url()
                                                 : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }

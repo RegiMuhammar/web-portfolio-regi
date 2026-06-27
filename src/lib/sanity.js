@@ -18,6 +18,23 @@ const builder = createImageUrlBuilder(client);
  * Usage: urlFor(image).width(800).url()
  */
 export function urlFor(source) {
+    if (!source || (typeof source === 'object' && !source.asset)) {
+        return {
+            width: () => ({
+                height: () => ({
+                    url: () => ''
+                }),
+                url: () => ''
+            }),
+            height: () => ({
+                width: () => ({
+                    url: () => ''
+                }),
+                url: () => ''
+            }),
+            url: () => ''
+        };
+    }
     return builder.image(source);
 }
 

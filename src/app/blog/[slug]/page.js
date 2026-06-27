@@ -9,20 +9,23 @@ import Footer from '@/components/Footer';
 // Portable Text component overrides for blog body
 const ptComponents = {
     types: {
-        image: ({ value }) => (
-            <figure style={{ margin: '32px 0' }}>
-                <img
-                    src={urlFor(value).width(900).url()}
-                    alt={value.alt || ''}
-                    style={{ width: '100%', borderRadius: '8px' }}
-                />
-                {value.caption && (
-                    <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
-                        {value.caption}
-                    </figcaption>
-                )}
-            </figure>
-        ),
+        image: ({ value }) => {
+            if (!value || !value.asset) return null;
+            return (
+                <figure style={{ margin: '32px 0' }}>
+                    <img
+                        src={urlFor(value).width(900).url()}
+                        alt={value.alt || ''}
+                        style={{ width: '100%', borderRadius: '8px' }}
+                    />
+                    {value.caption && (
+                        <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
+                            {value.caption}
+                        </figcaption>
+                    )}
+                </figure>
+            );
+        },
         codeBlock: ({ value }) => (
             <div style={{ margin: '24px 0' }}>
                 {value.filename && (
@@ -119,7 +122,7 @@ export async function generateMetadata({ params }) {
         title: post.seoTitle || `${post.title} — Regi Muhammar`,
         description: post.seoDescription || post.excerpt,
         openGraph: {
-            images: post.coverImage ? [urlFor(post.coverImage).width(1200).height(630).url()] : [],
+            images: (post.coverImage && post.coverImage.asset) ? [urlFor(post.coverImage).width(1200).height(630).url()] : [],
         },
     };
 }
@@ -172,7 +175,7 @@ export default async function BlogDetailPage({ params }) {
                 <div className="detail-banner">
                     <img
                         src={
-                            post.coverImage
+                            (post.coverImage && post.coverImage.asset)
                                 ? urlFor(post.coverImage).width(1200).url()
                                 : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200'
                         }
@@ -219,7 +222,7 @@ export default async function BlogDetailPage({ params }) {
                                 <div className="blog-img" style={{ height: '160px' }}>
                                     <img
                                         src={
-                                            item.coverImage
+                                            (item.coverImage && item.coverImage.asset)
                                                 ? urlFor(item.coverImage).width(600).url()
                                                 : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800'
                                         }

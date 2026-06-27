@@ -79,7 +79,7 @@ export default async function FeaturedProjects() {
                                 <div className="featured-card-thumb">
                                     <img
                                         src={
-                                            project.thumbnail
+                                            (project.thumbnail && project.thumbnail.asset)
                                                 ? urlFor(project.thumbnail).width(900).url()
                                                 : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }

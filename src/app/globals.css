@@ -204,18 +204,20 @@ a {
 .hero-content {
     position: relative;
     z-index: 10;
-    padding: 0 48px;
-    padding-bottom: 20vh;
+    padding: 100px 48px 0;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 60px;
+    flex: 1;
 }
 
 .hero-content-left {
     flex: 1;
-    max-width: 560px;
-    margin-bottom: -10vh;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
 .hero-content-right {
@@ -224,11 +226,54 @@ a {
     flex-shrink: 0;
 }
 
+/* Available for Work Badge */
+.hero-available-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 60px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.3px;
+    width: fit-content;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-available-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+    animation: pulseDot 2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+        opacity: 1;
+    }
+
+    50% {
+        box-shadow: 0 0 16px rgba(34, 197, 94, 0.9), 0 0 32px rgba(34, 197, 94, 0.3);
+        opacity: 0.85;
+    }
+}
+
 .hero-headline {
     font-family: 'Raleway', sans-serif;
-    font-size: clamp(28px, 3.2vw, 42px);
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: clamp(22px, 2.4vw, 42px);
+    font-weight: 600;
+    line-height: 1.35;
     color: var(--white);
     margin: 0;
 }
@@ -241,6 +286,51 @@ a {
     line-height: 1.7;
     margin: 0;
 }
+
+/* Big Name — Bottom Center (full-width like Dominic reference) */
+.hero-big-name {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    line-height: 1;
+    pointer-events: auto;
+    /* enable hover */
+    overflow: hidden;
+}
+
+.hero-big-name span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17vw;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 0.85;
+    display: block;
+    white-space: nowrap;
+}
+
+.name-default {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.65) 60%, rgba(255, 255, 255, 0.2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.name-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity;
+    background: radial-gradient(circle 50px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(211, 40, 0, 0.8) 65%, rgba(255, 255, 255, 0.85) 50%, rgba(255, 255, 255, 0) 100%);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+
 
 /* ROLES BAR — table-like grid between hero and ticker */
 .roles-bar {
@@ -2721,17 +2811,43 @@ footer {
     }
 }
 
+/* Tablet: keep subject photo anchored properly */
+@media (max-width: 1024px) and (min-width: 701px) {
+    .hero-content {
+        padding: 90px 32px 0;
+        gap: 40px;
+    }
+
+    .hero-content-left {
+        max-width: 400px;
+    }
+
+    .hero-content-right {
+        max-width: 340px;
+    }
+
+    .hero-subject {
+        object-fit: contain;
+        object-position: center bottom;
+        transform: scale(0.85);
+    }
+}
+
 @media (max-width: 700px) {
     .hero {
         height: auto;
         min-height: 100svh;
-        display: block;
-        padding-top: 8svh;
-        background: var(--black);
+        display: flex;
+        flex-direction: column;
+        padding-top: 0;
         overflow-x: hidden;
     }
 
     .hero-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         object-position: center top;
         opacity: 0.56;
@@ -2756,17 +2872,27 @@ footer {
         inline-size: auto;
         max-inline-size: none;
         margin-inline: 7%;
-        padding: 5svh 0 0;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
+        padding: 80px 0 0;
+        display: flex;
+        flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        gap: 2.2svh;
+        gap: 2.5svh;
         overflow: hidden;
+        flex: 1;
     }
 
-    .hero-content-left,
+    .hero-content-left {
+        order: 1;
+        flex: none;
+        inline-size: 100%;
+        max-inline-size: 100%;
+        margin: 0;
+        min-width: 0;
+    }
+
     .hero-content-right {
+        order: 2;
         flex: none;
         inline-size: 100%;
         max-inline-size: 100%;
@@ -2777,9 +2903,8 @@ footer {
     .hero-headline {
         inline-size: 100%;
         max-inline-size: 100%;
-        font-size: clamp(26px, 8vw, 34px);
-        line-height: 1.08;
-        letter-spacing: 0;
+        font-size: clamp(20px, 6vw, 32px);
+        line-height: 1.3;
         overflow-wrap: break-word;
         word-break: normal;
     }
@@ -2817,6 +2942,16 @@ footer {
         justify-self: start;
     }
 
+    .hero-big-name {
+        display: none;
+    }
+
+    .hero-available-badge {
+        font-size: 11px;
+        padding: 6px 14px;
+        gap: 8px;
+    }
+
     .hero-subject-mobile {
         position: relative;
         z-index: 4;
@@ -2824,7 +2959,7 @@ footer {
         width: 132%;
         max-width: none;
         height: auto;
-        margin: -5svh 0 0 -16%;
+        margin: -2svh 0 0 -16%;
         filter: drop-shadow(0 34px 70px rgba(0, 0, 0, 0.62));
     }
 }
@@ -2840,7 +2975,7 @@ footer {
     }
 
     .hero-headline {
-        font-size: clamp(24px, 7.6vw, 32px);
+        font-size: clamp(18px, 6vw, 26px);
     }
 
     .hero-description {
@@ -2926,4 +3061,37 @@ footer {
     font-size: 14px;
     line-height: 1.6;
     color: #a0a0a0;
+}
+
+/* GSAP ANIMATION & PORTRAIT PARALLAX EFFECTS */
+
+/* Enable hover and scale transitions on the name container */
+.hero-big-name {
+    pointer-events: auto !important;
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transform-origin: center bottom;
+}
+
+.hero-big-name:hover {
+    transform: scale(1.015);
+}
+
+.hero-big-name span {
+    pointer-events: none !important;
+    /* let container capture hover */
+    cursor: default;
+}
+
+.hero-big-name:hover .name-default {
+    opacity: 0.2;
+    /* slightly dim the default to emphasize the glow */
+    transition: opacity 0.5s ease;
+}
+
+
+/* Reveal classes to prevent FOUC */
+.reveal {
+    opacity: 0;
+    visibility: hidden;
+    will-change: transform, opacity;
 }

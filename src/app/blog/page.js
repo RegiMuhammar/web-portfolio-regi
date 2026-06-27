@@ -61,7 +61,7 @@ export default async function BlogPage() {
                                         <div className="blog-img">
                                             <img
                                                 src={
-                                                    p.coverImage
+                                                    (p.coverImage && p.coverImage.asset)
                                                         ? urlFor(p.coverImage).width(900).url()
                                                         : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800'
                                                 }
@@ -99,7 +99,7 @@ export default async function BlogPage() {
                                         <div className="blog-img" style={{ height: '160px' }}>
                                             <img
                                                 src={
-                                                    p.coverImage
+                                                    (p.coverImage && p.coverImage.asset)
                                                         ? urlFor(p.coverImage).width(600).url()
                                                         : 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800'
                                                 }

@@ -61,7 +61,7 @@ export default async function AboutPage() {
     const highlights = about?.highlights || FALLBACK_HIGHLIGHTS;
     const timeline = about?.timeline || FALLBACK_TIMELINE;
     const achievements = about?.achievements || FALLBACK_ACHIEVEMENTS;
-    const photoUrl = about?.photo ? urlFor(about.photo).width(600).height(800).url() : null;
+    const photoUrl = (about?.photo && about.photo.asset) ? urlFor(about.photo).width(600).height(800).url() : null;
 
     return (
         <div style={{ paddingTop: '80px' }}>

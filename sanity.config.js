@@ -1,5 +1,6 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
+import { media } from 'sanity-plugin-media';
 import { schemaTypes } from './src/sanity/schemaTypes/index';
 import { structure } from './src/sanity/structure';
 
@@ -13,6 +14,7 @@ export default defineConfig({
 
     plugins: [
         structureTool({ structure }),
+        media(),
     ],
 
     schema: {
