@@ -219,11 +219,11 @@ export default async function BlogDetailPage({ params }) {
                     <div className="related-grid">
                         {related.map((item) => (
                             <Link href={`/blog/${item.slug}`} className="blog-card small" key={item._id}>
-                                <div className="blog-img" style={{ height: '160px' }}>
+                                <div className="blog-img">
                                     <img
                                         src={
                                             (item.coverImage && item.coverImage.asset)
-                                                ? urlFor(item.coverImage).width(600).url()
+                                                ? urlFor(item.coverImage).width(800).height(500).fit('crop').url()
                                                 : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800'
                                         }
                                         alt={item.title}

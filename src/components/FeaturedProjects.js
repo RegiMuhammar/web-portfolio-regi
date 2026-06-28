@@ -80,7 +80,7 @@ export default async function FeaturedProjects() {
                                     <img
                                         src={
                                             (project.thumbnail && project.thumbnail.asset)
-                                                ? urlFor(project.thumbnail).width(900).url()
+                                                ? urlFor(project.thumbnail).width(960).height(600).fit('crop').url()
                                                 : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }
                                         alt={project.title}

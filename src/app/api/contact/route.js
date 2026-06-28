@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request) {
     try {
         const body = await request.json();
@@ -22,6 +20,7 @@ export async function POST(request) {
             return Response.json({ error: 'Mail service misconfigured' }, { status: 500 });
         }
 
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { data, error } = await resend.emails.send({
             from: 'Portfolio Contact <onboarding@resend.dev>',
             to: 'regimuhammar@gmail.com',

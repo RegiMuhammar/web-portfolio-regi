@@ -1124,7 +1124,8 @@ a {
 }
 
 .port-img {
-    height: 200px;
+    width: 100%;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
     position: relative;
 }
@@ -1539,7 +1540,8 @@ a {
 }
 
 .blog-img {
-    height: 220px;
+    width: 100%;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
 }
 

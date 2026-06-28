@@ -74,7 +74,7 @@ export default function PortfolioClient({ projects }) {
                                     <img
                                         src={
                                             (project.thumbnail && project.thumbnail.asset)
-                                                ? urlFor(project.thumbnail).width(800).url()
+                                                ? urlFor(project.thumbnail).width(800).height(500).fit('crop').url()
                                                 : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }
                                         alt={project.title}

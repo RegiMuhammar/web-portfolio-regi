@@ -250,7 +250,7 @@ export default async function PortfolioDetailPage({ params }) {
                                     <img
                                         src={
                                             (item.thumbnail && item.thumbnail.asset)
-                                                ? urlFor(item.thumbnail).width(800).url()
+                                                ? urlFor(item.thumbnail).width(800).height(500).fit('crop').url()
                                                 : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }
                                         alt={item.title}
