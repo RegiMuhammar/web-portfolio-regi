@@ -1,5 +1,6 @@
 // FeaturedProjects — Server Component (no more client-side Supabase fetch)
 import Link from 'next/link';
+import Image from 'next/image';
 import { getFeaturedProjects, urlFor } from '@/lib/sanity';
 
 export default async function FeaturedProjects() {
@@ -77,13 +78,15 @@ export default async function FeaturedProjects() {
 
                                 {/* Right: Thumbnail (60%) */}
                                 <div className="featured-card-thumb">
-                                    <img
+                                    <Image
                                         src={
                                             (project.thumbnail && project.thumbnail.asset)
                                                 ? urlFor(project.thumbnail).width(960).height(600).fit('crop').url()
                                                 : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }
                                         alt={project.title}
+                                        width={960}
+                                        height={600}
                                         loading="lazy"
                                     />
                                 </div>

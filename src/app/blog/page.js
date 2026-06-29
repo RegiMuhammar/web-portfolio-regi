@@ -1,5 +1,6 @@
 // Blog Page — Server Component
 import Link from 'next/link';
+import Image from 'next/image';
 import { getPosts, urlFor } from '@/lib/sanity';
 import Footer from '@/components/Footer';
 
@@ -59,13 +60,15 @@ export default async function BlogPage() {
                                         key={p._id}
                                     >
                                         <div className="blog-img">
-                                            <img
+                                            <Image
                                                 src={
                                                     (p.coverImage && p.coverImage.asset)
                                                         ? urlFor(p.coverImage).width(960).height(600).fit('crop').url()
                                                         : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800'
                                                 }
                                                 alt={p.title}
+                                                width={960}
+                                                height={600}
                                                 loading="lazy"
                                             />
                                         </div>
@@ -97,13 +100,15 @@ export default async function BlogPage() {
                                         key={p._id}
                                     >
                                         <div className="blog-img">
-                                            <img
+                                            <Image
                                                 src={
                                                     (p.coverImage && p.coverImage.asset)
                                                         ? urlFor(p.coverImage).width(800).height(500).fit('crop').url()
                                                         : 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800'
                                                 }
                                                 alt={p.title}
+                                                width={800}
+                                                height={500}
                                                 loading="lazy"
                                             />
                                         </div>

@@ -69,11 +69,14 @@ export default async function AboutPage() {
                 <div className="about-grid">
                     <div className="about-photo-wrap">
                         {photoUrl ? (
-                            <img
+                            <Image
                                 className="about-photo"
                                 src={photoUrl}
                                 alt={about?.name || 'Regi Muhammar'}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                width={600}
+                                height={800}
+                                priority
+                                style={{ objectFit: 'cover' }}
                             />
                         ) : (
                             <Image

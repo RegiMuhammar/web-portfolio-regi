@@ -1,10 +1,25 @@
 // Blog Detail Page — Server Component with Portable Text & Static Generation
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
 import { getPostBySlug, getAllPostSlugs, getRelatedPosts, urlFor } from '@/lib/sanity';
 import Footer from '@/components/Footer';
+
+// Helper to parse image dimensions from Sanity asset ref
+const parseSanityDimensions = (ref) => {
+    if (!ref) return { width: 800, height: 600 };
+    const pattern = /-(?<width>\d+)x(?<height>\d+)-/;
+    const match = pattern.exec(ref);
+    if (match && match.groups) {
+        return {
+            width: parseInt(match.groups.width, 10),
+            height: parseInt(match.groups.height, 10)
+        };
+    }
+    return { width: 800, height: 600 };
+};
 
 // Portable Text component overrides for blog body
 const ptComponents = {
@@ -12,12 +27,16 @@ const ptComponents = {
         // Legacy: handles existing _type 'image' blocks
         image: ({ value }) => {
             if (!value || !value.asset) return null;
+            const ref = value.asset._ref || value.asset._id;
+            const { width, height } = parseSanityDimensions(ref);
             return (
                 <figure style={{ margin: '32px 0' }}>
-                    <img
+                    <Image
                         src={urlFor(value).url()}
                         alt={value.alt || ''}
-                        style={{ width: '100%', borderRadius: '8px' }}
+                        width={width}
+                        height={height}
+                        style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
                     />
                     {value.caption && (
                         <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
@@ -30,12 +49,16 @@ const ptComponents = {
         // New: handles _type 'bodyImage' blocks
         bodyImage: ({ value }) => {
             if (!value || !value.asset) return null;
+            const ref = value.asset._ref || value.asset._id;
+            const { width, height } = parseSanityDimensions(ref);
             return (
                 <figure style={{ margin: '32px 0' }}>
-                    <img
+                    <Image
                         src={urlFor(value).url()}
                         alt={value.alt || ''}
-                        style={{ width: '100%', borderRadius: '8px' }}
+                        width={width}
+                        height={height}
+                        style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
                     />
                     {value.caption && (
                         <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
@@ -192,13 +215,16 @@ export default async function BlogDetailPage({ params }) {
 
                 {/* Banner Image */}
                 <div className="detail-banner">
-                    <img
+                    <Image
                         src={
                             (post.coverImage && post.coverImage.asset)
-                                ? urlFor(post.coverImage).width(1200).url()
+                                ? urlFor(post.coverImage).width(1200).height(675).fit('crop').url()
                                 : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200'
                         }
                         alt={post.title}
+                        width={1200}
+                        height={675}
+                        priority
                     />
                 </div>
 
@@ -239,13 +265,15 @@ export default async function BlogDetailPage({ params }) {
                         {related.map((item) => (
                             <Link href={`/blog/${item.slug}`} className="blog-card small" key={item._id}>
                                 <div className="blog-img">
-                                    <img
+                                    <Image
                                         src={
                                             (item.coverImage && item.coverImage.asset)
                                                 ? urlFor(item.coverImage).width(800).height(500).fit('crop').url()
                                                 : 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800'
                                         }
                                         alt={item.title}
+                                        width={800}
+                                        height={500}
                                         loading="lazy"
                                     />
                                 </div>

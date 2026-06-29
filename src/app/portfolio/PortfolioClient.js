@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { urlFor } from '@/lib/sanity';
 import Footer from '@/components/Footer';
 
@@ -71,13 +72,15 @@ export default function PortfolioClient({ projects }) {
                                 key={project._id}
                             >
                                 <div className="port-img">
-                                    <img
+                                    <Image
                                         src={
                                             (project.thumbnail && project.thumbnail.asset)
                                                 ? urlFor(project.thumbnail).width(800).height(500).fit('crop').url()
                                                 : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800'
                                         }
                                         alt={project.title}
+                                        width={800}
+                                        height={500}
                                         loading="lazy"
                                     />
                                 </div>
