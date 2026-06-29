@@ -9,12 +9,31 @@ import Footer from '@/components/Footer';
 // Portable Text component overrides for blog body
 const ptComponents = {
     types: {
+        // Legacy: handles existing _type 'image' blocks
         image: ({ value }) => {
             if (!value || !value.asset) return null;
             return (
                 <figure style={{ margin: '32px 0' }}>
                     <img
-                        src={urlFor(value).width(900).url()}
+                        src={urlFor(value).url()}
+                        alt={value.alt || ''}
+                        style={{ width: '100%', borderRadius: '8px' }}
+                    />
+                    {value.caption && (
+                        <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
+                            {value.caption}
+                        </figcaption>
+                    )}
+                </figure>
+            );
+        },
+        // New: handles _type 'bodyImage' blocks
+        bodyImage: ({ value }) => {
+            if (!value || !value.asset) return null;
+            return (
+                <figure style={{ margin: '32px 0' }}>
+                    <img
+                        src={urlFor(value).url()}
                         alt={value.alt || ''}
                         style={{ width: '100%', borderRadius: '8px' }}
                     />
@@ -143,7 +162,7 @@ export default async function BlogDetailPage({ params }) {
     const related = await getRelatedPosts(post.category, slug);
 
     return (
-        <div style={{ paddingTop: '64px' }}>
+        <div className="clean-bg-page" style={{ paddingTop: '64px' }}>
             {/* Content */}
             <div className="detail-content">
                 <Link href="/blog" className="detail-back">

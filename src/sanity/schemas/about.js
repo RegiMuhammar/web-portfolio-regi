@@ -28,6 +28,7 @@ export default {
         {
             name: 'photo',
             title: 'Profile Photo',
+            description: 'Main profile photo on the About page. Ideal aspect ratio is 3:4 portrait (e.g., 600x800 px or 1200x1600 px).',
             type: 'image',
             options: { hotspot: true },
         },

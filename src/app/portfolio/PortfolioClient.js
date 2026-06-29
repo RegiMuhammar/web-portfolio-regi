@@ -27,11 +27,11 @@ export default function PortfolioClient({ projects }) {
             : projects.filter((p) => p.category === activeFilter);
 
     return (
-        <div style={{ paddingTop: '64px' }}>
+        <div className="clean-bg-page" style={{ paddingTop: '64px' }}>
             <section className="section">
                 <div className="section-label">Selected Work</div>
                 <div className="section-title">
-                    Data & AI <span className="outline">Projects</span>
+                    Data & AI Projects
                 </div>
                 <p
                     style={{
@@ -42,7 +42,7 @@ export default function PortfolioClient({ projects }) {
                         lineHeight: 1.8,
                     }}
                 >
-                    From machine learning models to enterprise dashboards — a curated
+                    From machine learning models to enterprise dashboards,a curated
                     selection of work across data engineering, AI, and analytics.
                 </p>
 
@@ -80,19 +80,8 @@ export default function PortfolioClient({ projects }) {
                                         alt={project.title}
                                         loading="lazy"
                                     />
-                                    <div className="port-overlay"></div>
-                                    <div className="port-category">{project.category}</div>
                                 </div>
                                 <div className="port-body">
-                                    {project.tags && (
-                                        <div className="port-tags">
-                                            {project.tags.map((tag) => (
-                                                <span className="port-tag" key={tag}>
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
                                     <div className="port-title">{project.title}</div>
                                     <div className="port-desc">{project.description}</div>
                                     <div className="port-footer">

@@ -10,9 +10,11 @@ export default function SiteChrome() {
 
     if (pathname?.startsWith('/studio')) return null;
 
+    const isPortfolioOrBlog = pathname?.startsWith('/portfolio') || pathname?.startsWith('/blog');
+
     return (
         <>
-            <GlowOrbs />
+            {!isPortfolioOrBlog && <GlowOrbs />}
             <Navbar />
         </>
     );

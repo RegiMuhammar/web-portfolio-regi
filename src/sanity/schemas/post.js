@@ -101,6 +101,7 @@ export default {
         {
             name: 'coverImage',
             title: 'Cover Image',
+            description: 'Shown on blog lists and as article header. Ideal aspect ratio is 16:10 or 16:9 (e.g., 960x600 px or 1200x630 px for SEO).',
             type: 'image',
             options: { hotspot: true },
             fields: [
@@ -154,12 +155,12 @@ export default {
                     },
                 },
                 {
+                    // Backward compat: existing data uses _type 'image'
                     type: 'image',
                     options: { hotspot: true },
-                    fields: [
-                        { name: 'caption', title: 'Caption', type: 'string' },
-                        { name: 'alt', title: 'Alt Text', type: 'string' },
-                    ],
+                },
+                {
+                    type: 'bodyImage',
                 },
                 {
                     type: 'object',

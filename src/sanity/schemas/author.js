@@ -25,6 +25,7 @@ export default {
         {
             name: 'photo',
             title: 'Profile Photo',
+            description: 'Profile avatar. Ideal aspect ratio is 1:1 square (e.g., 500x500 px).',
             type: 'image',
             options: { hotspot: true },
         },

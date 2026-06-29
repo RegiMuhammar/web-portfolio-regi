@@ -173,14 +173,14 @@ export default {
         {
             name: 'thumbnail',
             title: 'Thumbnail Image',
-            description: 'Shown on portfolio grid cards',
+            description: 'Shown on portfolio grid cards. Ideal aspect ratio is 16:10 (e.g., 960x600 px or 800x500 px).',
             type: 'image',
             options: { hotspot: true },
         },
         {
             name: 'bannerImage',
             title: 'Banner Image',
-            description: 'Shown at top of project detail page',
+            description: 'Shown at top of project detail page. Ideal aspect ratio is wide landscape / 16:9 (e.g., 1920x1080 px or 1200x675 px).',
             type: 'image',
             options: { hotspot: true },
         },
@@ -210,12 +210,12 @@ export default {
                     },
                 },
                 {
+                    // Backward compat: existing data uses _type 'image'
                     type: 'image',
                     options: { hotspot: true },
-                    fields: [
-                        { name: 'caption', title: 'Caption', type: 'string' },
-                        { name: 'alt', title: 'Alt Text', type: 'string' },
-                    ],
+                },
+                {
+                    type: 'bodyImage',
                 },
                 {
                     type: 'object',

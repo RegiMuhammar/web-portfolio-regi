@@ -1112,6 +1112,7 @@ a {
 .port-card {
     background: var(--dark2);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s;
@@ -1120,7 +1121,7 @@ a {
 }
 
 .port-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-2px);
 }
 
 .port-img {
@@ -1135,52 +1136,14 @@ a {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s;
-    filter: grayscale(30%);
 }
 
 .port-card:hover .port-img img {
-    transform: scale(1.05);
-    filter: grayscale(0%);
-}
-
-.port-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 60%);
-}
-
-.port-category {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--orange);
-    color: var(--white);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 4px 10px;
+    transform: scale(1.015);
 }
 
 .port-body {
     padding: 24px;
-}
-
-.port-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
-}
-
-.port-tag {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--orange);
-    border: 1px solid rgba(232, 80, 2, 0.3);
-    padding: 3px 8px;
 }
 
 .port-title {
@@ -2116,14 +2079,15 @@ footer {
     justify-content: space-between;
     padding: 16px 48px;
     backdrop-filter: blur(20px);
+    background: rgba(10, 10, 10, 0.85);
     border-bottom: 1px solid rgba(232, 80, 2, 0.1);
-    /* background: rgba(0, 0, 0, 0.7); */
     transition: padding 0.3s;
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
+    gap: 10px;
     cursor: pointer;
     text-decoration: none;
 }
@@ -2137,8 +2101,10 @@ footer {
 }
 
 .nav-logo-img {
-    height: 24px;
-    width: auto;
+    height: 32px;
+    width: 32px;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
 .footer-logo-img {
@@ -3096,4 +3062,9 @@ footer {
     opacity: 0;
     visibility: hidden;
     will-change: transform, opacity;
+}
+
+/* CLEAN BACKGROUND PAGE OVERRIDE */
+body:has(.clean-bg-page) {
+    background: #020202 !important;
 }

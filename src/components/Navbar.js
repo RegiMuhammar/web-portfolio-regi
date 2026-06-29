@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 const navItems = [
     { href: '/portfolio', label: 'Portfolio' },
@@ -18,6 +19,14 @@ export default function Navbar() {
     return (
         <nav id="navbar" className="site-nav">
             <Link href="/" className="nav-logo">
+                <Image
+                    src="/site-icon-regi.webp"
+                    alt="Regi Muhammar Logo"
+                    width={32}
+                    height={32}
+                    className="nav-logo-img"
+                    priority
+                />
                 <span className="nav-logo-text">Regi Muhammar</span>
             </Link>
             <ul className={`nav-links ${mobileOpen ? 'mobile-open' : ''}`}>

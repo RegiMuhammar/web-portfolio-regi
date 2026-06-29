@@ -9,12 +9,31 @@ import Footer from '@/components/Footer';
 // Portable Text component overrides for project body
 const ptComponents = {
     types: {
+        // Legacy: handles existing _type 'image' blocks
         image: ({ value }) => {
             if (!value || !value.asset) return null;
             return (
                 <figure style={{ margin: '32px 0' }}>
                     <img
-                        src={urlFor(value).width(900).url()}
+                        src={urlFor(value).url()}
+                        alt={value.alt || ''}
+                        style={{ width: '100%', borderRadius: '8px' }}
+                    />
+                    {value.caption && (
+                        <figcaption style={{ textAlign: 'center', color: 'var(--gray)', fontSize: '13px', marginTop: '8px' }}>
+                            {value.caption}
+                        </figcaption>
+                    )}
+                </figure>
+            );
+        },
+        // New: handles _type 'bodyImage' blocks
+        bodyImage: ({ value }) => {
+            if (!value || !value.asset) return null;
+            return (
+                <figure style={{ margin: '32px 0' }}>
+                    <img
+                        src={urlFor(value).url()}
                         alt={value.alt || ''}
                         style={{ width: '100%', borderRadius: '8px' }}
                     />
@@ -75,7 +94,7 @@ export default async function PortfolioDetailPage({ params }) {
     const related = await getRelatedProjects(project.category, slug);
 
     return (
-        <div style={{ paddingTop: '64px' }}>
+        <div className="clean-bg-page" style={{ paddingTop: '64px' }}>
             {/* Content */}
             <div className="detail-content">
                 <Link href="/portfolio" className="detail-back">
@@ -120,9 +139,9 @@ export default async function PortfolioDetailPage({ params }) {
                     <img
                         src={
                             (project.bannerImage && project.bannerImage.asset)
-                                ? urlFor(project.bannerImage).width(1200).url()
+                                ? urlFor(project.bannerImage).width(1200).height(675).fit('crop').url()
                                 : (project.thumbnail && project.thumbnail.asset)
-                                    ? urlFor(project.thumbnail).width(1200).url()
+                                    ? urlFor(project.thumbnail).width(1200).height(750).fit('crop').url()
                                     : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200'
                         }
                         alt={project.title}
@@ -256,8 +275,6 @@ export default async function PortfolioDetailPage({ params }) {
                                         alt={item.title}
                                         loading="lazy"
                                     />
-                                    <div className="port-overlay"></div>
-                                    <div className="port-category">{item.category}</div>
                                 </div>
                                 <div className="port-body">
                                     <div className="port-title">{item.title}</div>

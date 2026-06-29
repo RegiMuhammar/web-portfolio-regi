@@ -21,7 +21,7 @@ export default async function BlogPage() {
     const posts = allPosts.filter((p) => !p.featured);
 
     return (
-        <div style={{ paddingTop: '64px' }}>
+        <div className="clean-bg-page" style={{ paddingTop: '64px' }}>
             <section className="section">
                 <div className="section-label">Knowledge Base</div>
                 <div className="section-title">
