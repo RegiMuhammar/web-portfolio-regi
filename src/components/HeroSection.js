@@ -189,9 +189,10 @@ export default function HeroSection() {
                 className="hero-subject-mobile"
                 src="/subject-hero-sec.webp"
                 alt="Regi Muhammar"
-                width={760}
-                height={940}
+                width={500}
+                height={618}
                 priority
+                quality={90}
                 style={{ opacity: 0 }}
             />
         </section>
