@@ -2922,9 +2922,9 @@ footer {
         position: relative;
         z-index: 4;
         display: block;
-        width: 145%;
+        width: 150%;
         max-width: none;
-        height: 50svh;
+        height: 60svh;
         object-fit: cover;
         object-position: top center;
         margin: 2svh 0 0 -16%;
